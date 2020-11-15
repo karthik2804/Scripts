@@ -6,6 +6,7 @@
 # Description: A simple script to maintain a journal
 #########################################################
 
+mkdir ~/Documents/journal
 cd ~/Documents/journal
 
 if [ "$1" == "open" ] 
