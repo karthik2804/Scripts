@@ -1,0 +1,52 @@
+#!/bin/sh
+
+cd ~/Documents/journal
+
+if [ $1 == "read" ] 
+then
+	echo "Opening Joural"
+	less full_journal
+	exit 0
+elif [ $1 == "help" ]
+then
+	echo "A simple script to maintain jorunals"
+	echo "Usage: journal [OPTION]"
+	echo "  When used without any option opens today's entry to edit"
+	echo -e  "\n  Options:"
+	echo "    read		Open the entire journal"
+	echo "    help		Print this help"
+	echo  -e "\n  When run merges all entries before today into the main jorunal\n"
+	exit 0
+else
+	echo "Invalid argument. Use \"journal help\"for help"
+	exit 1
+fi
+
+
+CURRENT_DAY=$(date +'%Y-%m-%d')
+
+
+if test -f "$CURRENT_DAY.md"
+then
+	vim $CURRENT_DAY.md 
+else
+	echo -e "## $CURRENT_DAY\n" > $CURRENT_DAY.md
+	echo -e "### What did you do\n" >> $CURRENT_DAY.md
+	echo -e "### What went well\n" >> $CURRENT_DAY.md
+	echo -e "### What did not go well\n" >> $CURRENT_DAY.md
+	vim $CURRENT_DAY.md
+fi
+
+echo "Checking if merge is required"
+FILES_TO_MERGE="$(find . ! -name . -prune ! -newermt 00:00 | sort -n -r)"
+if [ -z "$FILES_TO_MERGE" ] 
+then
+	echo "Nothing to merge"
+else
+	cat $FILES_TO_MERGE > temp
+	mv temp full_journal
+	echo "Mergin entries and deleting redundant files"
+	rm $(find . ! -name . -prune ! -newermt 00:00 ! -name "full_journal")
+fi
+
+echo "Have a nice day"

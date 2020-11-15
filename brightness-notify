@@ -1,0 +1,3 @@
+#!/bin/sh
+brightness=$(echo $((($(cat /sys/class/backlight/intel_backlight/brightness) * 100 )/ 208 )))
+dunstify -i ~/scripts/icons/brightness.png -r 2593 -u normal "$brightness%" "" 
