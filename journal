@@ -8,22 +8,23 @@
 
 cd ~/Documents/journal
 
-if [ $1 == "read" ] 
+if [ "$1" == "open" ] 
 then
 	echo "Opening Joural"
 	less full_journal
 	exit 0
-elif [ $1 == "help" ]
+elif [ "$1" == "help" ]
 then
 	echo "A simple script to maintain jorunals"
 	echo "Usage: journal [OPTION]"
 	echo "  When used without any option opens today's entry to edit"
 	echo -e  "\n  Options:"
-	echo "    read		Open the entire journal"
+	echo "    open		Open the entire journal"
 	echo "    help		Print this help"
 	echo  -e "\n  When run merges all entries before today into the main jorunal\n"
 	exit 0
-else
+elif [ ! -z "$1" ]
+then
 	echo "Invalid argument. Use \"journal help\"for help"
 	exit 1
 fi
