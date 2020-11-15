@@ -1,5 +1,11 @@
 #!/bin/sh
 
+#########################################################
+#	Author:	Karthik Ganeshram
+#	Date: 2020-11-15
+# Description: A simple script to maintain a journal
+#########################################################
+
 cd ~/Documents/journal
 
 if [ $1 == "read" ] 
